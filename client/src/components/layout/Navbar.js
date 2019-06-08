@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import "../../App.css";
 
 class Navbar extends Component {
   render() {
@@ -10,12 +11,12 @@ class Navbar extends Component {
             <Link
               to="/"
               style={{
-                fontFamily: "monospace"
+                fontFamily: "Josefin Sans"
               }}
               className="col s5 brand-logo center black-text"
             >
-              <i className="material-icons">code</i>
-              MERN
+              
+              CatchApp
             </Link>
           </div>
         </nav>
