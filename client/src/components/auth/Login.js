@@ -24,6 +24,7 @@ class Login extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.auth.isAuthenticated) {
+      console.log("props history: ", this.props);
       this.props.history.push("/dashboard"); // push user to dashboard when they login
     }
     if (nextProps.errors) {
