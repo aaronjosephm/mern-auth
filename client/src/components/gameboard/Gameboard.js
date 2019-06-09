@@ -3,14 +3,28 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
 import styled from 'styled-components';
+import Canvas from './Canvas';
 
 class Gameboard extends Component {
+  goBack(e) {
+    e.preventDefault();
+    this.props.history.push('/dashboard');
+  }
 
   render() {
     const { user } = this.props.auth;
     return (
       <div>
         <h1>Welcome to a new game!</h1>
+        <GameCanvasWrapper>
+          <Canvas />
+        </GameCanvasWrapper>
+        <BackButton
+          className="btn btn-large waves-effect waves-light hoverable red accent-3"
+          onClick={(e) => this.goBack(e)}
+        >
+          Cancel
+        </BackButton>
       </div>
     );
   }
@@ -27,7 +41,7 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, { logoutUser })(Gameboard);
 
-const logoutButton = styled.button`
+const LogoutButton = styled.button`
   width: 150px;
   borderRadius: 3px;
   letterSpacing: 1.5px;
@@ -35,17 +49,32 @@ const logoutButton = styled.button`
   algin-items: right;
 `;
 
-const startButton = styled.button`
+const StartButton = styled.button`
   width: 200px;
   borderRadius: 3px;
   letterSpacing: 1.5px;
   marginTop: 1rem;
 `;
 
-const buttonsWrapper = styled.div`
+const ButtonsWrapper = styled.div`
   display flex;
   justify-content: center;
 `;
+
+const GameCanvasWrapper = styled.div`
+  margin: auto;
+  background-color: green;
+  height: 600px;
+  margin-bottom: 20px;
+  width: 800px;
+`;
+
+const BackButton = styled.button`
+  width: 150px;
+  borderRadius: 3px;
+  letterSpacing: 1.5px;
+  marginTop: 1rem;
+`
 
 const banner = styled.div`
   width: 100%;
