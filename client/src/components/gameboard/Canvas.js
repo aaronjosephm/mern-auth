@@ -21,6 +21,8 @@ class Canvas extends Component {
     	deck: cards,
       dealerHand: {},
       playerHand: {},
+      gamesWon: { value: 0 },
+      gamesLost: { value: 0 },
       gameStatus: undefined,
       gameMessage: undefined
     }
@@ -33,18 +35,24 @@ class Canvas extends Component {
   }
 
   checkValue = (value, playerType) => {
+    let gamesWon = Object.assign({}, this.state.gamesWon);
+    let gamesLost = Object.assign({}, this.state.gamesLost);
     if (value > 21) {
       console.log('busted!');
       if (playerType === 'player') {
-        this.setState({ gameMessage: GAME_MESSAGES.PLAYER_BUSTS })
+        gamesLost.value = gamesLost.value + 1;
+        this.setState({ gameMessage: GAME_MESSAGES.PLAYER_BUSTS, gamesLost })
       } else {
-        this.setState({ gameMessage: GAME_MESSAGES.DEALER_BUSTS })
+        gamesWon.value = gamesWon.value + 1;
+        this.setState({ gameMessage: GAME_MESSAGES.DEALER_BUSTS, gamesWon })
       }
     } else if (value === 21) {
       if (playerType === 'player') {
-        this.setState({ gameMessage: GAME_MESSAGES.PLAYER_WINS })
+        gamesWon.value = gamesWon.value + 1;
+        this.setState({ gameMessage: GAME_MESSAGES.PLAYER_WINS, gamesWon })
       } else {
-        this.setState({ gameMessage: GAME_MESSAGES.DEALER_WINS })
+        gamesLost.value = gamesLost.value + 1;
+        this.setState({ gameMessage: GAME_MESSAGES.DEALER_WINS, gamesLost })
       }
     } 
   }
@@ -53,7 +61,6 @@ class Canvas extends Component {
     let sumValue = 0;
     let acesArray = [];
 
-    console.log("checking hand");
     const cardValues = Object.values(cards);
     for (let card of cardValues) {
       let arr = card.split('');
@@ -131,9 +138,10 @@ class Canvas extends Component {
   calculateWinner = () => {
     const playerValue = this.checkHand(this.state.playerHand, 'player');
     const dealerValue = this.checkHand(this.state.dealerHand, 'dealer');
-
+    let gamesLost = Object.assign({}, this.state.gamesLost);
     if (dealerValue > playerValue) {
-      this.setState({ gameMessage: GAME_MESSAGES.DEALER_WINS })
+      gamesLost.value = gamesLost.value + 1;
+      this.setState({ gameMessage: GAME_MESSAGES.DEALER_WINS, gamesLost })
     } else if (dealerValue === playerValue) {
       this.setState({ gameMessage: GAME_MESSAGES.DRAW })
     }
@@ -171,6 +179,9 @@ class Canvas extends Component {
   render() {
     const playerCards = this.state.playerHand;
     const dealerCards = this.state.dealerHand;
+    const gamesWon = this.state.gamesWon.value
+    const gamesLost = this.state.gamesLost.value
+    const total = gamesWon + gamesLost;
 
     const playerHandJSX = Object.values(playerCards).map(card => {
       const cardImg = cardImages[`${card}`];
@@ -196,6 +207,11 @@ class Canvas extends Component {
 
     return (
       <div>
+        <GameCount>
+          <h4>Games Won: {gamesWon}</h4>
+          <h4>Games Lost: {gamesLost}</h4>
+          <h4>Total: {total}</h4>
+        </GameCount>
         <br />
         <br />
         <br />
@@ -290,6 +306,19 @@ const DealerHand = styled.div`
 const Card = styled.div`
   width: 70px;
   height: 100px;
+`;
+
+const GameCount = styled.div`
+  width: 800px;
+  position: absolute;
+  bottom: -100px;
+  padding-top: 200px;
+  display: table;
+  justify-content: center;
+
+  & h4 {
+    color: white !important;
+  }
 `;
 
 const DealerHandDescription = styled.div`

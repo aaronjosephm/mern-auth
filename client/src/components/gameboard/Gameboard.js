@@ -13,6 +13,7 @@ class Gameboard extends Component {
 
   render() {
     const { user } = this.props.auth;
+    const leave = 'Leave Table';
     return (
       <div>
         <GameCanvasWrapper>
@@ -22,7 +23,7 @@ class Gameboard extends Component {
           className="btn btn-large waves-effect waves-light hoverable red accent-3"
           onClick={(e) => this.goBack(e)}
         >
-          Cancel
+          {leave}
         </BackButton>
       </div>
     );
@@ -63,16 +64,17 @@ const ButtonsWrapper = styled.div`
 const GameCanvasWrapper = styled.div`
   margin: auto;
   background-color: green;
-  height: 600px;
+  height: 750px;
   margin-bottom: 20px;
   width: 800px;
 `;
 
 const BackButton = styled.button`
-  width: 150px;
+  width: 250px;
   borderRadius: 3px;
   letterSpacing: 1.5px;
   marginTop: 1rem;
+  margin-bottom: 20px;
 `
 
 const banner = styled.div`
