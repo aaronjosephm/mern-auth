@@ -15,7 +15,6 @@ class Gameboard extends Component {
     const { user } = this.props.auth;
     return (
       <div>
-        <h1>Welcome to a new game!</h1>
         <GameCanvasWrapper>
           <Canvas />
         </GameCanvasWrapper>

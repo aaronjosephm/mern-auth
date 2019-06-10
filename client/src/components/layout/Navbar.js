@@ -16,7 +16,7 @@ class Navbar extends Component {
               className="col s5 brand-logo center black-text"
             >
               
-              CatchApp
+              Black Jack
             </Link>
           </div>
         </nav>
