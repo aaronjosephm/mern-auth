@@ -95,6 +95,7 @@ const StartButton = styled.button`
 const TableButtonList = styled.div`
   margin: 0;
   justify-content: center;
+  background-color: black;
 `;
 
 const ButtonsWrapper = styled.div`

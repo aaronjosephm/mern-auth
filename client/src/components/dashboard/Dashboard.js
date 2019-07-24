@@ -27,6 +27,7 @@ class Dashboard extends Component {
 
     render() {
         const { user } = this.props.auth;
+        console.log("Here is the history so far: ", this.props.history);
         return (
             <div>
               <div style={{ height: "75vh" }} className="container valign-wrapper">
