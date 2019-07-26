@@ -35,145 +35,142 @@ class Canvas extends Component {
     }
 
     checkValue = (value, playerType) => {
-        let gamesWon = Object.assign({}, this.state.gamesWon);
-        let gamesLost = Object.assign({}, this.state.gamesLost);
-        if (value > 21) {
-            console.log('busted!');
-            if (playerType === 'player') {
-                gamesLost.value = gamesLost.value + 1;
-                this.setState({ gameMessage: GAME_MESSAGES.PLAYER_BUSTS, gamesLost })
-            } else {
-                gamesWon.value = gamesWon.value + 1;
-                this.setState({ gameMessage: GAME_MESSAGES.DEALER_BUSTS, gamesWon })
-            }
-        } else if (value === 21) {
-            if (playerType === 'player') {
-                gamesWon.value = gamesWon.value + 1;
-                this.setState({ gameMessage: GAME_MESSAGES.PLAYER_WINS, gamesWon })
-            } else {
-                gamesLost.value = gamesLost.value + 1;
-                this.setState({ gameMessage: GAME_MESSAGES.DEALER_WINS, gamesLost })
-            }
+      let gamesWon = Object.assign({}, this.state.gamesWon);
+      let gamesLost = Object.assign({}, this.state.gamesLost);
+      if (value > 21) {
+        if (playerType === 'player') {
+          gamesLost.value = gamesLost.value + 1;
+          this.setState({ gameMessage: GAME_MESSAGES.PLAYER_BUSTS, gamesLost })
+        } else {
+          gamesWon.value = gamesWon.value + 1;
+          this.setState({ gameMessage: GAME_MESSAGES.DEALER_BUSTS, gamesWon })
         }
+      } else if (value === 21) {
+        if (playerType === 'player') {
+          gamesWon.value = gamesWon.value + 1;
+          this.setState({ gameMessage: GAME_MESSAGES.PLAYER_WINS, gamesWon })
+        } else {
+          gamesLost.value = gamesLost.value + 1;
+          this.setState({ gameMessage: GAME_MESSAGES.DEALER_WINS, gamesLost })
+        }
+      }
     }
 
     checkHand = (cards, playerType) => {
-        let sumValue = 0;
-        let acesArray = [];
+      let sumValue = 0;
+      let acesArray = [];
 
-        const cardValues = Object.values(cards);
-        for (let card of cardValues) {
-            let arr = card.split('');
-            arr.pop();
-            const type = arr.join('');
+      const cardValues = Object.values(cards);
+      for (let card of cardValues) {
+        let arr = card.split('');
+        arr.pop();
+        const type = arr.join('');
 
-            if (type === 'J' || type === 'Q' || type === 'K') {
-                sumValue = sumValue + 10;
-            } else if (type !== 'A') {
-                sumValue = sumValue + parseInt(type);
-            } else {
-                acesArray.push(type);
-            }
-            console.log('type is:', type);
+        if (type === 'J' || type === 'Q' || type === 'K') {
+          sumValue = sumValue + 10;
+        } else if (type !== 'A') {
+          sumValue = sumValue + parseInt(type);
+        } else {
+          acesArray.push(type);
         }
+      }
 
-        for (let ace in acesArray) {
-            if (sumValue + 11 > 21) {
-                sumValue = sumValue + 2;
-            } else {
-                sumValue = sumValue + 11;
-            }
+      for (let ace in acesArray) {
+        if (sumValue + 11 > 21) {
+          sumValue = sumValue + 2;
+        } else {
+          sumValue = sumValue + 11;
         }
-        console.log('sum is:', sumValue);
-        this.checkValue(sumValue, playerType);
-        return sumValue;
+      }
+      this.checkValue(sumValue, playerType);
+      return sumValue;
     }
 
     generateRandomCard = () => {
-        const deck = Object.assign([], this.state.deck);
-        const currentLength = deck.length - 1;
-        const pos = Math.floor(Math.random() * currentLength);
-        const card = deck[pos];
-        deck.splice(pos, 1);
-        this.setState({ deck });
-        return card;
+      const deck = Object.assign([], this.state.deck);
+      const currentLength = deck.length - 1;
+      const pos = Math.floor(Math.random() * currentLength);
+      const card = deck[pos];
+      deck.splice(pos, 1);
+      this.setState({ deck });
+      return card;
     }
 
     generateDealerHand = () => {
-        const leftCard = this.generateRandomCard();
-        const rightCard = this.generateRandomCard();
-        const dealerHand = {
-            card1: leftCard,
-            card2: rightCard
-        }
-        this.setState({ dealerHand });
-        this.checkHand(dealerHand, 'dealer');
+      const leftCard = this.generateRandomCard();
+      const rightCard = this.generateRandomCard();
+      const dealerHand = {
+        card1: leftCard,
+        card2: rightCard
+      }
+      this.setState({ dealerHand });
+      this.checkHand(dealerHand, 'dealer');
     }
 
     generatePlayerHand = () => {
-        const leftCard = this.generateRandomCard();
-        const rightCard = this.generateRandomCard();
-        const playerHand = {
-            card1: leftCard,
-            card2: rightCard
-        }
-        this.checkHand(playerHand, 'player');
-        this.setState({ playerHand });
+      const leftCard = this.generateRandomCard();
+      const rightCard = this.generateRandomCard();
+      const playerHand = {
+        card1: leftCard,
+        card2: rightCard
+      }
+      this.checkHand(playerHand, 'player');
+      this.setState({ playerHand });
     }
 
     hit = (hand, type) => {
-        const newHand = Object.assign({}, hand);
-        const newCard = this.generateRandomCard();
-        const title = `card${Object.keys(newHand).length + 1}`;
-        newHand[`${title}`] = newCard;
-        if (type === 'player') {
-            this.setState({ playerHand: newHand });
-            this.checkHand(newHand, 'player');
-        } else {
-            this.setState({ dealerHand: newHand });
-            this.checkHand(newHand, 'dealer');
-        }
+      const newHand = Object.assign({}, hand);
+      const newCard = this.generateRandomCard();
+      const title = `card${Object.keys(newHand).length + 1}`;
+      newHand[`${title}`] = newCard;
+      if (type === 'player') {
+        this.setState({ playerHand: newHand });
+        this.checkHand(newHand, 'player');
+      } else {
+        this.setState({ dealerHand: newHand });
+        this.checkHand(newHand, 'dealer');
+      }
     }
 
     calculateWinner = () => {
-        const playerValue = this.checkHand(this.state.playerHand, 'player');
-        const dealerValue = this.checkHand(this.state.dealerHand, 'dealer');
-        let gamesLost = Object.assign({}, this.state.gamesLost);
-        if (dealerValue > playerValue) {
-            gamesLost.value = gamesLost.value + 1;
-            this.setState({ gameMessage: GAME_MESSAGES.DEALER_WINS, gamesLost })
-        } else if (dealerValue === playerValue) {
-            this.setState({ gameMessage: GAME_MESSAGES.DRAW })
-        }
+      const playerValue = this.checkHand(this.state.playerHand, 'player');
+      const dealerValue = this.checkHand(this.state.dealerHand, 'dealer');
+      let gamesLost = Object.assign({}, this.state.gamesLost);
+      if (dealerValue > playerValue) {
+        gamesLost.value = gamesLost.value + 1;
+        this.setState({ gameMessage: GAME_MESSAGES.DEALER_WINS, gamesLost })
+      } else if (dealerValue === playerValue) {
+        this.setState({ gameMessage: GAME_MESSAGES.DRAW })
+      }
     }
 
     draw = async () => {
-        let dealerHandValue = this.checkHand(this.state.dealerHand, 'dealer');
-        const playerHandValue = this.checkHand(this.state.playerHand, 'player');
-        while (dealerHandValue <= 21) {
-            if (dealerHandValue > 16 && dealerHandValue >= playerHandValue) {
-                this.calculateWinner();
-                break;
-            } else {
-                this.hit(this.state.dealerHand, 'dealer');
-            }
-            await setTimeout(() => {}, 100);
-            dealerHandValue = this.checkHand(this.state.dealerHand, 'dealer');
-            await setTimeout(() => {}, 400);
+      let dealerHandValue = this.checkHand(this.state.dealerHand, 'dealer');
+      const playerHandValue = this.checkHand(this.state.playerHand, 'player');
+      while (dealerHandValue <= 21) {
+        if (dealerHandValue > 16 && dealerHandValue >= playerHandValue) {
+          this.calculateWinner();
+          break;
+        } else {
+          this.hit(this.state.dealerHand, 'dealer');
         }
+        await setTimeout(() => {}, 100);
+        dealerHandValue = this.checkHand(this.state.dealerHand, 'dealer');
+        await setTimeout(() => {}, 400);
+      }
     }
 
     play = async e => {
-        e.preventDefault();
-        await this.setState({
-            deck: cards,
-            dealerHand: {},
-            playerHand: {},
-            gameStatus: undefined,
-            gameMessage: ''
-        });
-        this.generatePlayerHand();
-        this.generateDealerHand();
+      e.preventDefault();
+      await this.setState({
+        deck: cards,
+        dealerHand: {},
+        playerHand: {},
+        gameStatus: undefined,
+        gameMessage: ''
+      });
+      this.generatePlayerHand();
+      this.generateDealerHand();
     }
 
     render() {
