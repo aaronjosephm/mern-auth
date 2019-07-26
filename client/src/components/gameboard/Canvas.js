@@ -206,58 +206,56 @@ class Canvas extends Component {
         })
 
         return (
-            <div>
-        <GameCount>
-          <h4>Games Won: {gamesWon}</h4>
-          <h4>Games Lost: {gamesLost}</h4>
-          <h4>Total: {total}</h4>
-        </GameCount>
-        <br />
-        <br />
-        <br />
-        <br />
-        <DealerHandDescription>
-          <h4>Dealer's hand:</h4>
-          <DealerHand>
-            {dealerHandJSX}
-          </DealerHand>
-        </DealerHandDescription>
-        <GameMessage>
-          {this.state.gameMessage && 
-            <h3><strong>{this.state.gameMessage}</strong></h3>
-          }
-        </GameMessage>
-        <HandDescription>
-          <h4>Your hand:</h4>
-          <PlayerHand>
-            {playerHandJSX}
-          </PlayerHand>
-        </HandDescription>
-        <img src={Table} alt="poker table" height='400' width='700'/>
-        <ButtonsWrapper>
-          <PlayButton
-              className="btn btn-large waves-effect waves-light hoverable blue accent-3"
-              onClick={(e) => this.play(e)}
-              disabled={this.state.gameMessage === ''}
-            >
-              Deal
-          </PlayButton>
-          <HitButton
-            className="btn btn-large waves-effect waves-light hoverable purple accent-3"
-            onClick={() => this.hit(this.state.playerHand, 'player')}
-            disabled={this.state.gameMessage !== '' && this.state.gameMessage !== undefined}
-            >
-            Hit me!
-          </HitButton>
-          <DrawButton
-            className="btn btn-large waves-effect waves-light hoverable red accent-3"
-            onClick={() => this.draw()}
-            disabled={this.state.gameMessage !== '' && this.state.gameMessage !== undefined}
-            >
-            draw
-          </DrawButton>
-        </ButtonsWrapper>
-      </div>
+         <div>
+            <GameCount>
+              <h4>Games Won: {gamesWon}</h4>
+              <h4>Games Lost: {gamesLost}</h4>
+              <h4>Total: {total}</h4>
+            </GameCount>
+            <br />
+            <br />
+            <DealerHandDescription>
+              <h4>Dealer's hand:</h4>
+              <DealerHand>
+                {dealerHandJSX}
+              </DealerHand>
+            </DealerHandDescription>
+            <GameMessage>
+              {this.state.gameMessage && 
+                <h3><strong>{this.state.gameMessage}</strong></h3>
+              }
+            </GameMessage>
+            <HandDescription>
+              <h4>Your hand:</h4>
+              <PlayerHand>
+                {playerHandJSX}
+              </PlayerHand>
+            </HandDescription>
+            <img src={Table} alt="poker table" height='400' width='700'/>
+            <ButtonsWrapper>
+              <PlayButton
+                  className="btn btn-large waves-effect waves-light hoverable blue accent-3"
+                  onClick={(e) => this.play(e)}
+                  disabled={this.state.gameMessage === ''}
+                >
+                  Deal
+              </PlayButton>
+              <HitButton
+                className="btn btn-large waves-effect waves-light hoverable purple accent-3"
+                onClick={() => this.hit(this.state.playerHand, 'player')}
+                disabled={this.state.gameMessage !== '' && this.state.gameMessage !== undefined}
+                >
+                Hit me!
+              </HitButton>
+              <DrawButton
+                className="btn btn-large waves-effect waves-light hoverable red accent-3"
+                onClick={() => this.draw()}
+                disabled={this.state.gameMessage !== '' && this.state.gameMessage !== undefined}
+                >
+                draw
+              </DrawButton>
+            </ButtonsWrapper>
+          </div>
         );
     }
 }
@@ -266,7 +264,7 @@ export default Canvas;
 
 const GameMessage = styled.div `
   width: 800px;
-  bottom: 350px;
+  bottom: 440px;
   position: absolute;
   display: flex;
   justify-content: center;
@@ -311,7 +309,7 @@ const Card = styled.div `
 const GameCount = styled.div `
   width: 800px;
   position: absolute;
-  bottom: -100px;
+  bottom: 25px;
   padding-top: 200px;
   display: table;
   justify-content: center;
@@ -324,7 +322,7 @@ const GameCount = styled.div `
 const DealerHandDescription = styled.div `
   width: 800px;
   position: absolute;
-  bottom: 550px;
+  bottom: 650px;
   padding-top: 200px;
   display: flex;
   justify-content: center;

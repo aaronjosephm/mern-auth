@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import classnames from "classnames";
 import { connect } from "react-redux";
 import { getAllTables } from "../../actions/tableActions";
+import GameBoardBackground from '../../images/gameboard.jpg';
 
 class TableList extends Component {
     constructor() {
@@ -53,6 +54,7 @@ class TableList extends Component {
       tableListJSX = Object.keys(tables).map(table => {
         return (
           <div>
+            <img class="LoginBackground" src={GameBoardBackground} />
             <ButtonsWrapper>
               <StartButton
                 onClick={(e) => this.goToTable(e, table)}
@@ -66,12 +68,10 @@ class TableList extends Component {
         })
       }
         
-        
-
 		return (
-            <TableButtonList>
-              {tableListJSX}
-            </TableButtonList>
+        <TableButtonList>
+          {tableListJSX}
+        </TableButtonList>
 			);
 	}
 }

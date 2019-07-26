@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
 import styled from 'styled-components';
 import Canvas from './Canvas';
+import GameBoardBackground from '../../images/gameboard.jpg';
 
 class Gameboard extends Component {
   goBack(e) {
@@ -16,6 +17,7 @@ class Gameboard extends Component {
     const leave = 'Leave Table';
     return (
       <div>
+        <img class="LoginBackground" src={GameBoardBackground} />
         <GameCanvasWrapper>
           <Canvas />
         </GameCanvasWrapper>
@@ -63,10 +65,10 @@ const ButtonsWrapper = styled.div`
 
 const GameCanvasWrapper = styled.div`
   margin: auto;
-  background-color: green;
-  height: 750px;
+  height: 700px;
   margin-bottom: 20px;
   width: 800px;
+  position: relative;
 `;
 
 const BackButton = styled.button`

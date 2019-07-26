@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
 import styled from 'styled-components';
+import GameBoardBackground from '../../images/gameboard.jpg';
 
 class Dashboard extends Component {
     onLogoutClick = e => {
@@ -29,15 +30,16 @@ class Dashboard extends Component {
         const { user } = this.props.auth;
         console.log("Here is the history so far: ", this.props.history);
         return (
-            <div>
+            <MainWrapper>
+              <img class="LoginBackground" src={GameBoardBackground} />
               <div style={{ height: "75vh" }} className="container valign-wrapper">
                 <div className="row">
-                  <div className="col s12 center-align">
+                  <div className="front-text text-color-white col s12 center-align">
                     <h4>
                       <b>Hey there,</b> {user.name.split(" ")[0]}
-                      <p className="flow-text grey-text text-darken-1">
-                        You are logged into a full-stack{" "}
-                        <span style={{ fontFamily: "monospace" }}>MERN</span> app 👏
+                      <p className="flow-text text-color-white text-darken-1">
+                        You are logged into BLACK JACK BIAAATCH!!!!!{" "}
+                        <span style={{ fontFamily: "monospace" }}></span>  👏
                       </p>
                     </h4>
                     <ButtonsWrapper>
@@ -59,7 +61,7 @@ class Dashboard extends Component {
                   </div>
                 </div>
               </div>
-            </div>
+            </MainWrapper>
         );
     }
 }
@@ -74,6 +76,11 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, { logoutUser })(Dashboard);
+
+const MainWrapper = styled.div`
+
+
+`;
 
 const LogoutButton = styled.button `
   width: 150px;
